@@ -10,12 +10,13 @@
 ######################################################################
 
 # Required Modules
-"""import schedule
+
+import main
 
 from easygui import msgbox
 import os
 import time
-from pygame import mixer
+"""import schedule
 
 # Variables
 
@@ -81,3 +82,4 @@ if __name__ == '__main__':
 while True:
     schedule.run_pending()
     time.sleep(1)"""
+
