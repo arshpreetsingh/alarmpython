@@ -1,3 +1,107 @@
+import os
+from typing import List, Dict
+
+import boto3
+from langchain.chains import LLMChain
+from langchain.llms import Bedrock
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import MultiQueryRetriever, ContextualCompressionRetriever
+from langchain.text_splitter import CharacterTextSplitter
+from PyPDF2 import PdfReader
+
+# --- 1. Read PDF and convert to dictionary ---
+
+def extract_data_from_pdf(pdf_path: str) -> List[Dict]:
+    """
+    Extracts data from a PDF file and converts it into a list of dictionaries.
+    """
+    pdf_data =
+    reader = PdfReader(pdf_path)
+    for page in reader.pages:
+        text = page.extract_text()
+        #... (Implement your logic to extract relevant data from the text and convert it into a dictionary)...
+        pdf_data.append(extracted_data)
+    return pdf_data
+
+# --- 2. Give information to LLM and ask questions ---
+
+def create_prompt(keys: List[str]) -> PromptTemplate:
+    """
+    Creates a prompt template for extracting specific keys from the data.
+    """
+    prompt_text = f"""You are a helpful AI assistant.
+    Extract the following values from the provided data: {', '.join(keys)}
+
+    Data: {{data}}
+    Values:"""
+    return PromptTemplate(
+        input_variables=["data"],
+        template=prompt_text
+    )
+
+# --- 3. Initialize the Bedrock LLM ---
+
+# Make sure to replace 'your_bedrock_region' with your actual region
+llm = Bedrock(model_id="anthropic.claude-v2", client=boto3.client('bedrock-runtime', region_name='your_bedrock_region'))
+
+# --- 4. MultiQuery Retriever ---
+
+def get_multi_query_retriever(pdf_data: List[Dict]) -> MultiQueryRetriever:
+    """
+    Initializes a MultiQueryRetriever for the given data.
+    """
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    return MultiQueryRetriever.from_llm(
+        llm=llm,
+        retriever=your_base_retriever(pdf_data, text_splitter),  # Replace with your actual retriever
+    )
+
+# --- 5. Contextual Compression Retriever ---
+
+def get_contextual_compression_retriever(pdf_data: List[Dict]) -> ContextualCompressionRetriever:
+    """
+    Initializes a ContextualCompressionRetriever for the given data.
+    """
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+    return ContextualCompressionRetriever(
+        base_compressor=your_compressor,  # Replace with your actual compressor
+        base_retriever=your_base_retriever(pdf_data, text_splitter)  # Replace with your actual retriever
+    )
+
+def main():
+    # Extract data from PDF
+    pdf_data = extract_data_from_pdf("your_pdf_file.pdf")
+
+    # Create prompt
+    keys = ["trade_date", "something_else"]
+    prompt_template = create_prompt(keys)
+
+    # Initialize retrievers
+    multi_query_retriever = get_multi_query_retriever(pdf_data)
+    contextual_compression_retriever = get_contextual_compression_retriever(pdf_data)
+
+    # --- Run the chains ---
+
+    # MultiQuery Retriever
+    multi_query_result = multi_query_retriever.get_relevant_documents(query="your query")
+    print("MultiQuery Retriever results:", multi_query_result)
+
+    # Contextual Compression Retriever
+    contextual_compression_result = contextual_compression_retriever.get_relevant_documents(query="your query")
+    print("Contextual Compression Retriever results:", contextual_compression_result)
+
+    #... (Implement your logic to use the retrieved data and extract the values)...
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+
+
+
 from langchain_google_genai import GoogleGenerativeAI
 from langchain_core.prompts import PromptTemplate
 from typing import List, Dict
