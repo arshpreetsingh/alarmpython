@@ -1,3 +1,64 @@
+import os
+
+from langchain.chains import LLMChain
+from langchain.llms import Bedrock
+from langchain.prompts import PromptTemplate
+from langchain.retrievers import BedrockRetrievalQAChain
+
+# Set your AWS credentials
+os.environ["AWS_ACCESS_KEY_ID"] = "YOUR_AWS_ACCESS_KEY_ID"
+os.environ["AWS_SECRET_ACCESS_KEY"] = "YOUR_AWS_SECRET_ACCESS_KEY"
+os.environ["AWS_DEFAULT_REGION"] = "YOUR_AWS_REGION"
+
+# Initialize the Bedrock LLM
+llm = Bedrock(
+    model_id="anthropic.claude-v2",  # Or another Bedrock model
+    client=boto3.client('bedrock-runtime')
+)
+
+# Initialize the Bedrock retrieval chain
+retriever = BedrockRetrievalQAChain.from_llm(
+    llm=llm,
+    retriever=your_bedrock_retriever  # Replace with your actual Bedrock retriever
+)
+
+# Create a prompt template
+prompt = PromptTemplate(
+    input_variables=["context", "question"],
+    template="Context: {context}\nQuestion: {question}"
+)
+
+# Create an LLM chain
+chain = LLMChain(llm=llm, prompt=prompt)
+
+# Get relevant documents from the knowledge base
+docs = retriever.get_relevant_documents(query="your query")
+
+# Extract the relevant content from the documents
+retrieved_text = [doc.page_content for doc in docs]
+
+# Run the chain with the retrieved context and your question
+response = chain.invoke({"context": retrieved_text, "question": "your question"})
+
+print(response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ######################################################################
 ##                     Script for LIfe                              ##
 ##								    ##
