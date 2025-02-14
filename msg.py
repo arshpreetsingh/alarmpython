@@ -1,3 +1,143 @@
+
+
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllIndexes",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%",
+                "index-name": "%"
+            },
+            "rule-action": "include"
+        }
+    ]
+}
+
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllPrimaryKeys",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%",
+                "constraint-name": "%"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "includeAllForeignKeys",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%",
+                "constraint-name": "%"
+            },
+            "rule-action": "include"
+        }
+    ]
+}
+
+
+
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllViews",
+            "object-locator": {
+                "schema-name": "%",
+                "view-name": "%"
+            },
+            "rule-action": "include"
+        }
+    ]
+}
+
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllStoredProcedures",
+            "object-locator": {
+                "schema-name": "%",
+                "stored-procedure-name": "%"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "selection",
+            "rule-id": "2",
+            "rule-name": "includeAllFunctions",
+            "object-locator": {
+                "schema-name": "%",
+                "function-name": "%"
+            },
+            "rule-action": "include"
+        }
+    ]
+}
+
+
+
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllTriggers",
+            "object-locator": {
+                "schema-name": "%",
+                "trigger-name": "%"
+            },
+            "rule-action": "include"
+        }
+    ]
+}
+
+
+
+
+{
+    "rules": [
+        {
+            "rule-type": "transformation",
+            "rule-id": "1",
+            "rule-name": "convertDataTypes",
+            "rule-target": "column",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%",
+                "column-name": "%"
+            },
+            "rule-action": "convert",
+            "data-type": {
+                "source-data-type": "NUMBER",
+                "target-data-type": "NUMERIC"
+            }
+        }
+    ]
+}
+
+
+
+
+
+
+
+
 import os
 from typing import List, Dict
 
