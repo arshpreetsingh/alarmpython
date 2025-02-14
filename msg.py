@@ -1,5 +1,91 @@
 
 
+# homo genous
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllTables",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%"
+            },
+            "rule-action": "include"
+        }
+    ]
+}
+
+
+# heterogenos
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllTables",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "transformation",
+            "rule-id": "2",
+            "rule-name": "convertDataTypes",
+            "rule-target": "column",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%",
+                "column-name": "%"
+            },
+            "rule-action": "convert",
+            "data-type": {
+                "source-data-type": "NUMBER",
+                "target-data-type": "NUMERIC"
+            }
+        }
+    ]
+}
+
+
+# continous data replication
+
+{
+    "rules": [
+        {
+            "rule-type": "selection",
+            "rule-id": "1",
+            "rule-name": "includeAllTables",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%"
+            },
+            "rule-action": "include"
+        },
+        {
+            "rule-type": "transformation",
+            "rule-id": "2",
+            "rule-name": "addTimestampColumn",
+            "rule-target": "column",
+            "object-locator": {
+                "schema-name": "%",
+                "table-name": "%"
+            },
+            "rule-action": "add-column",
+            "value": {
+                "name": "replication_timestamp",
+                "data-type": "timestamp",
+                "default-value": "CURRENT_TIMESTAMP"
+            }
+        }
+    ]
+}
+
+
 
 {
     "rules": [
